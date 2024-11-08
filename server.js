@@ -31,11 +31,6 @@ app.get("/fear-greed", async(req, res)=>{
     res.json({data: resp.response})
 })
 
-app.get("/", (req, res)=>{
-    console.log("hello")
-})
-
-
 async function getDataFromCMC(url){
         try{
             let response = null;

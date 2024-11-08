@@ -4,6 +4,7 @@ const cors = require("cors")
 
 const app = express()
 const CMC_KEY = "bb59d24c-a855-43b5-836a-163f35a328c4"
+const CGK_Key = "CG-ZkPiNUHJodnK7qrnGwx1Rcoj"
 const base_url = "https://pro-api.coinmarketcap.com"
 const port = 3025
 
@@ -13,10 +14,16 @@ app.use(express.urlencoded({extended: false}))
 
 app.get("/all-listings", async (req, res)=>{
     console.log("requesting")
-    //let resp = await getDataFromCMC(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`)
-    let respcg = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true`)
-    console.log(respcg.response)
-    res.json({data: respcg.response})
+    let resp = await getDataFromCMC(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`)
+    //let respcg = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true`)
+    console.log(resp.response)
+    res.json({data: resp.response})
+})
+
+app.get("/dpliq", async(req, res)=>{
+    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true&ids=dream-play-liquidity-medallion`)
+    console.log(resp.response)
+    res.json({data: resp.response})
 })
 
 app.get("/trending-latest", async (req, res)=>{
@@ -56,7 +63,7 @@ async function getDatafromCoinGecko(url){
         response = await axios.get(url, {
             headers: {
                 "Accept": "application/json",
-                "x-cg-demo-api-key": "CG-ZkPiNUHJodnK7qrnGwx1Rcoj"
+                "x-cg-demo-api-key": CGK_Key
             }
         })
         console.log(response.data)

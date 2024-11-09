@@ -20,14 +20,14 @@ app.get("/all-listings", async (req, res)=>{
     res.json({data: resp.response})
 })
 
-app.get("/dpliq", async(req, res)=>{
-    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true&ids=dream-play-liquidity-medallion`)
+app.get("/coins/:slug", async(req, res)=>{
+    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true&ids=${req.params.slug}`)
     console.log(resp.response)
     res.json({data: resp.response})
 })
 
 app.get("/trending-latest", async (req, res)=>{
-    let resp = await getDataFromCMC(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/trending/latest?limit=5`)
+    let resp = await getDataFromCMC(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?sort=percent_change_24h`)
     console.log(resp)
     res.json({data: resp.response})
 })

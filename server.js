@@ -12,6 +12,19 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+app.get("/search", async (req, res)=>{
+    let searchQuery = req.query.coin
+    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/search?search query=${searchQuery}`)
+    console.log(resp.response)
+    res.json({data: resp.response})
+})
+
+app.get("/metrics", async (req, res)=>{
+    let resp = await getDataFromCMC("https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest")
+    console.log(resp.response)
+    res.json({data: resp.response})
+})
+
 app.get("/all-listings", async (req, res)=>{
     console.log("requesting")
     let resp = await getDataFromCMC(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`)

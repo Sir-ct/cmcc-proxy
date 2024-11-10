@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended: false}))
 
 app.get("/search", async (req, res)=>{
     let searchQuery = req.query.coin
-    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/search?search query=${searchQuery}`)
+    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/search?query=${searchQuery}`)
     console.log(resp.response)
     res.json({data: resp.response})
 })
@@ -34,7 +34,7 @@ app.get("/all-listings", async (req, res)=>{
 })
 
 app.get("/coins/:slug", async(req, res)=>{
-    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true&ids=${req.params.slug}`)
+    let resp = await getDatafromCoinGecko(`https://api.coingecko.com/api/v3/coins/${req.params.slug}?vs_currency=usd&sparkline=true`)
     console.log(resp.response)
     res.json({data: resp.response})
 })
